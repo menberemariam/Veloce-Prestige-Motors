@@ -8,6 +8,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ReportsModule } from './reports/reports.module';
 import { User } from './users/user.entity';
 import { Reports } from './reports/reports.entity';
+import { UiModule } from './ui/ui.module';
 import cookieSession from 'cookie-session';
 
 @Module({
@@ -29,6 +30,7 @@ import cookieSession from 'cookie-session';
     }),
     UsersModule,
     ReportsModule,
+    UiModule,
   ],
   controllers: [AppController],
   providers: [
