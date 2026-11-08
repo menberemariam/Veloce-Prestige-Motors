@@ -1,0 +1,15 @@
+# Blueprint for deploying the NestJS backend on Render.
+# The React frontend deploys separately on Vercel (Root Directory: frontend).
+# Do NOT deploy this backend on Vercel: it is a long-running server and
+# Vercel serverless functions expect an exported handler, not app.listen().
+services:
+  - type: web
+    name: veloce-prestige-backend
+    runtime: node
+    buildCommand: npm install && npm run build
+    startCommand: npm run start:prod
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DB_NAME
+        value: /tmp/db.sqlite

@@ -22,7 +22,14 @@ import cookieSession from 'cookie-session';
       useFactory: (config: ConfigService) => {
         return {
           type: 'sqlite',
-          database: config.get<string>('DB_NAME'),
+          // Fall back so the app boots on hosts without a .env file (e.g.
+          // Render/Vercel). In production use /tmp, the only reliably
+          // writable dir on serverless/ephemeral filesystems.
+          database:
+            config.get<string>('DB_NAME') ||
+            (process.env.NODE_ENV === 'production'
+              ? '/tmp/db.sqlite'
+              : 'db.sqlite'),
           entities: [User, Reports],
           synchronize: true,
         };
