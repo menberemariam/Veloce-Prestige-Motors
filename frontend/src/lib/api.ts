@@ -1,6 +1,7 @@
 export type User = { id: number; email: string; admin: boolean };
+const BASE = import.meta.env.VITE_API_BASE ?? '';
 async function req(path: string, opts: RequestInit = {}) {
-  const r = await fetch(path, { credentials: 'include', headers: { 'Content-Type': 'application/json', ...(opts.headers||{}) }, ...opts });
+  const r = await fetch(BASE + path, { credentials: 'include', headers: { 'Content-Type': 'application/json', ...(opts.headers||{}) }, ...opts });
   const text = await r.text();
   let data: any; try { data = JSON.parse(text); } catch { data = text; }
   if (!r.ok) throw new Error(typeof data === 'string' ? data : (data?.message?.join?.(', ') || data?.message || `HTTP ${r.status}`));
